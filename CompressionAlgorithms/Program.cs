@@ -9,11 +9,10 @@ namespace CompressionAlgorithms
         
         static void Main(string[] args)
         {
+            
             string s = "Hello";
 
-            
 
-            
         }
     }
 }

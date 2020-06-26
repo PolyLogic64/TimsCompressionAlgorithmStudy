@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 
-public class HuffmanCoding
+namespace CompressionAlgorithms
 {
     public class HuffmanNode<T>
     {
@@ -9,13 +12,12 @@ public class HuffmanCoding
         public int frequency;
         public T symbol;
     }
-    public void Shit(string s)
+    
+    class HuffmanCoding
     {
-
+        public string Shit()
+        {
+            return "shit";
+        }
     }
-    public HuffmanCoding()
-	{
-		
-	
-	}
 }
