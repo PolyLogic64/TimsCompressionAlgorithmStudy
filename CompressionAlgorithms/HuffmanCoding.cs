@@ -25,64 +25,63 @@ namespace CompressionAlgorithms
     
     class HuffmanCoding
     {
-        public Dictionary<char, int> yes = new Dictionary<char, int>();
-        List<HuffmanNode<char>> sortedshit;
-        public List<HuffmanNode<char>> SortTheFuckingList(List<HuffmanNode<char>> l)
+        public Dictionary<char, int> inputDict = new Dictionary<char, int>();
+        List<HuffmanNode<char>> sortedList;
+        public List<HuffmanNode<char>> SortTheList(List<HuffmanNode<char>> l)
         {
             return l.OrderBy(o => o.frequency).ToList();
         }
         public void InputDigest(string s)
         {
             int amount;
-            List<HuffmanNode<char>> shit = new List<HuffmanNode<char>>();
+            List<HuffmanNode<char>> currentList = new List<HuffmanNode<char>>();
             for (int i = 0; i < s.Length; i++)
             {
-                if (yes.ContainsKey(s[i]))
+                if (inputDict.ContainsKey(s[i]))
                 {
                     amount = s.Split(s[i]).Length - 1;
-                    yes[s[i]] = amount;
+                    inputDict[s[i]] = amount;
                 }
                 else
                 {
                     amount = s.Split(s[i]).Length - 1;
-                    yes.Add(s[i], amount);
+                    inputDict.Add(s[i], amount);
                 }
             }
-            foreach (KeyValuePair<char, int> what in yes)
+            foreach (KeyValuePair<char, int> stuff in inputDict)
             {
-                //Console.WriteLine("Key = {0}, Value = {1}", what.Key, what.Value);
 
                 HuffmanNode<char> node = new HuffmanNode<char>();
-                node.symbol = what.Key;
-                node.frequency = what.Value;
+                node.symbol = stuff.Key;
+                node.frequency = stuff.Value;
 
-                shit.Add(node);
+                currentList.Add(node);
             }
-            sortedshit = SortTheFuckingList(shit);
+            sortedList = SortTheList(currentList);
         }
         public void ConnectNodes(List<HuffmanNode<char>> nodes)
         {
             if (nodes.Count <= 1)
             {
-                Console.WriteLine("fuck its a 1");
+                Console.WriteLine("its a 1");
             }
             else
             {
-                HuffmanNode<char> low1 = sortedshit[0];
-                HuffmanNode<char> low2 = sortedshit[1];
+                HuffmanNode<char> low1 = sortedList[0];
+                HuffmanNode<char> low2 = sortedList[1];
 
-                HuffmanNode<char> cum = new HuffmanNode<char>();
-                cum.child1 = low1;
-                cum.child2 = low2;
-                cum.frequency = low1.frequency + low2.frequency;
+                HuffmanNode<char> temp = new HuffmanNode<char>();
+                temp.child1 = low1;
+                temp.child2 = low2;
+                temp.frequency = low1.frequency + low2.frequency;
 
-                sortedshit.RemoveAt(sortedshit.IndexOf(low1));
-                sortedshit.RemoveAt(sortedshit.IndexOf(low2));
-                sortedshit.Add(cum);
+                sortedList.RemoveAt(sortedList.IndexOf(low1));
+                sortedList.RemoveAt(sortedList.IndexOf(low2));
+                sortedList.Add(temp);
 
-                cum = new HuffmanNode<char>();
+                temp = new HuffmanNode<char>();
 
-                sortedshit = SortTheFuckingList(sortedshit);
+                sortedList = SortTheList(sortedList);
 
             }
         }
@@ -91,9 +90,8 @@ namespace CompressionAlgorithms
             InputDigest(s);
             do
             {
-                ConnectNodes(sortedshit);
-                //sortedshit = SortTheFuckingList(sortedshit);
-            } while (sortedshit.Count > 1);
+                ConnectNodes(sortedList);
+            } while (sortedList.Count > 1);
 
             
 
