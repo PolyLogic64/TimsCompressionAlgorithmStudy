@@ -15,7 +15,10 @@ namespace CompressionAlgorithms
             
             string s = "Hello";
 
-            huffmanCoding.Start(s);
+            //huffmanCoding.Start(s);
+
+
+
         }
     }
 }
