@@ -1,2 +1,2 @@
 # TimsCompressionAlgorithmStudy
-A small Study in C# of my facination for Compression Algorithm
+A small Study in C# of my fascination for Compression Algorithm
