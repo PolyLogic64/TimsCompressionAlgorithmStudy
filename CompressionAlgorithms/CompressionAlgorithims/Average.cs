@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CompressionAlgorithms
+namespace TimsCompressionStudy
 {
-    class ReinforcementLearning
+    class Average
     {
     }
 }
