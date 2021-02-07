@@ -18,7 +18,7 @@ namespace TimsCompressionStudy.CompressionAlgorithms
         public string symbols;
         public float frequency;
 
-        //Combines two HuffmanNodes
+        // Combines two HuffmanNodes
         public static void Combine(HuffmanNode huffmanNode, HuffmanNode otherHuffmanNode, ref List<HuffmanNode> huffmanNodes)
         {
             HuffmanNode newNode = new HuffmanNode();
@@ -43,7 +43,8 @@ namespace TimsCompressionStudy.CompressionAlgorithms
 
     public class HuffmanCoding
     {
-        //Takes the Input und encodes it as a List of HuffmanNodes
+
+        // Takes the Input und encodes it as a List of HuffmanNodes
         public List<HuffmanNode> InputDigest(string file)
         {
 
@@ -77,7 +78,8 @@ namespace TimsCompressionStudy.CompressionAlgorithms
             
         }
         
-        //Generates the Tree, and outputs a single HuffmanNode that is the root Node
+
+        // Generates the Tree, and outputs a single HuffmanNode that is the root Node
         public HuffmanNode GenerateTree(List<HuffmanNode> huffmanNodes)
         {
             while (huffmanNodes.Count >= 2)
@@ -89,18 +91,18 @@ namespace TimsCompressionStudy.CompressionAlgorithms
 
         }
         
-        //Encodes the string based on the entire HuffmanTree
+
+        // Encodes the string based on the entire HuffmanTree
         public string EncodeString(string plaintext, HuffmanNode rootNode)
         {
             string encodedtext = "";
 
             foreach (char plainchar in plaintext)
             {
-                encodedtext += " ";
                 HuffmanNode currentNode = rootNode;
-                while(!(currentNode.childLeft == null && currentNode.childRight == null))
+                while(currentNode.childLeft != null && currentNode.childRight != null)
                 {
-                    if(!(currentNode.childLeft == null))
+                    if(currentNode.childLeft != null)
                     {
                         if (currentNode.childLeft.symbols.Contains(plainchar))
                         {
@@ -108,7 +110,7 @@ namespace TimsCompressionStudy.CompressionAlgorithms
                             encodedtext += 0;
                         }
                     }
-                    if(!(currentNode.childRight == null))
+                    if(currentNode.childRight != null)
                     {
                         if (currentNode.childRight.symbols.Contains(plainchar))
                         {
@@ -127,14 +129,64 @@ namespace TimsCompressionStudy.CompressionAlgorithms
             return encodedtext;
         }
         
-        //A more efficent way to encode a string by building a dictionary of the HuffmanTree and the codes of the characters
-        public void EncodeByDict(string plaintext, HuffmanNode rootNode)
+
+        // A more efficent way to encode a string by building a dictionary of the HuffmanTree and the codes of the characters
+        public string EncodeByDict(string plaintext, HuffmanNode rootNode)
         {
-            
+
+            // Generate Dictionary of Symbols and Codes
+
+            Dictionary<string, string> nice = new Dictionary<string, string>();
+
+            foreach (char yeah in rootNode.symbols)
+            {
+                string bruh = "";
+                HuffmanNode currentNode = rootNode;
+
+                while(currentNode.childLeft != null && currentNode.childRight != null)
+                {
+                    if(currentNode.childLeft != null)
+                    {
+                        if (currentNode.childLeft.symbols.Contains(yeah))
+                        {
+                            currentNode = currentNode.childLeft;
+                            bruh += "0";
+                        }
+                    }
+
+                    if(currentNode.childRight != null)
+                    {
+                        if (currentNode.childRight.symbols.Contains(yeah))
+                        {
+                            currentNode = currentNode.childRight;
+                            bruh += "1";
+                        }
+                    }
+
+                    
+                }
+
+                nice.Add(yeah.ToString(), bruh);
+                
+            }
+
+
+
+            // Encode the plaintext using the Dictionary
+
+            string noice = "";
+
+            foreach (char bruh in plaintext)
+            {
+                noice += nice[bruh.ToString()];
+            }
+
+            return noice;
             
         }
 
-        //
+
+        // Decodes a string based on the HuffmanTree
         public string DecodeHuffman(string encodedtext, HuffmanNode rootNode)
         {
             string decodedstring = "";
@@ -168,10 +220,22 @@ namespace TimsCompressionStudy.CompressionAlgorithms
             return decodedstring;
         }
         
-        //
+
+        // 
         public void DecodeByDict(string encodedtext, HuffmanNode rootNode)
         {
 
+        }
+
+
+
+        public void Quick(string file)
+        {
+            var nodelist = InputDigest(file);
+            var finalnode = GenerateTree(nodelist);
+            var encodetext = EncodeString(File.ReadAllText(file), finalnode);
+            var boi = EncodeByDict(File.ReadAllText(file), finalnode);
+            var decodedtext = DecodeHuffman(encodetext, finalnode);
         }
     }
 }
